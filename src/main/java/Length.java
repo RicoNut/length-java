@@ -1,35 +1,37 @@
 public class Length {
-    private final double value;
-    private final String unit;
 
-    public Length(double val, String targetUnit) {
-        this.value = val;
-        this.unit = targetUnit;
+    private final double value;
+
+    private UnitEnum unitEnum;
+
+    public Length(double value, UnitEnum unitEnum) {
+        this.value = value;
+        this.unitEnum = unitEnum;
     }
 
-    public Length convertAs(String targetUnit) {
+    public Length as(UnitEnum unit) {
         Length len = this;
-        if (this.unit.equals("f")) {
-            if (targetUnit.equals("yard")) {
-                len = new Length(this.value / 3, targetUnit);
-            } else if (targetUnit.equals("inch")) {
-                len = new Length(this.value * 12, targetUnit);
+        if (this.unitEnum == UnitEnum.FOOT) {
+            if (unit == UnitEnum.YARD) {
+                len = new Length(this.value / 3, unit);
+            } else if (unit == UnitEnum.INCH) {
+                len = new Length(this.value * 12, unit);
             }
         }
 
-        if (this.unit.equals("yard")) {
-            if (targetUnit.equals("inch")) {
-                len = new Length(this.value * 36, targetUnit);
-            } else if (targetUnit.equals("f")){
-                len = new Length(this.value * 3, targetUnit);
+        if (this.unitEnum == UnitEnum.YARD) {
+            if (unit == UnitEnum.INCH) {
+                len = new Length(this.value * 36, unit);
+            } else if (unit == UnitEnum.FOOT) {
+                len = new Length(this.value * 3, unit);
             }
         }
 
-        if (this.unit.equals("inch")) {
-            if (targetUnit.equals("f")) {
-                len = new Length(this.value / 12, targetUnit);
-            } else if (targetUnit.equals("yard")) {
-                len = new Length(this.value / 36, targetUnit);
+        if (this.unitEnum == UnitEnum.INCH) {
+            if (unit == UnitEnum.FOOT) {
+                len = new Length(this.value / 12, unit);
+            } else if (unit == UnitEnum.YARD) {
+                len = new Length(this.value / 36, unit);
             }
         }
 
@@ -39,8 +41,7 @@ public class Length {
     public double getVal() {
         return this.value;
     }
-
-    public String getUinnt() {
-        return this.unit;
+    public UnitEnum getUnitEnum() {
+        return this.unitEnum;
     }
 }
