@@ -8,33 +8,31 @@ public class Length {
     }
 
     public Length as(Unit target) {
-        Length result = this;
-
+        double resultValue = this.value;
         if (this.unit == Unit.FOOT) {
             if (target == Unit.YARD) {
-                result = new Length(this.value / 3, target);
+                resultValue = this.value / 3;
             } else if (target == Unit.INCH) {
-                result = new Length(this.value * 12, target);
+                resultValue = this.value * 12;
             }
         }
 
         if (this.unit == Unit.YARD) {
             if (target == Unit.INCH) {
-                result = new Length(this.value * 36, target);
-            } else if (target == Unit.FOOT){
-                result = new Length(this.value * 3, target);
+                resultValue = this.value * 36;
+            } else if (target == Unit.FOOT) {
+                resultValue = this.value * 3;
             }
         }
 
         if (this.unit == Unit.INCH) {
             if (target == Unit.FOOT) {
-                result = new Length(this.value / 12, target);
+                resultValue = this.value / 12;
             } else if (target == Unit.YARD) {
-                result = new Length(this.value / 36, target);
+                resultValue = this.value / 36;
             }
         }
-
-        return result;
+        return new Length(resultValue, target);
     }
 
     public double getValue() {
