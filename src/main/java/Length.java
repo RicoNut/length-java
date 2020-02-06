@@ -1,46 +1,49 @@
 public class Length {
     private final double value;
-    private final String unit;
+    private UnitEnum unitEnum;
 
-    public Length(double val, String uinnt) {
-        this.value = val;
-        this.unit = uinnt;
+    public Length(double value, UnitEnum unitEnum) {
+        this.value = value;
+        this.unitEnum = unitEnum;
     }
 
-    public Length as(String u) {
-        Length len = this;
-        if (this.unit.equals("f")) {
-            if (u.equals("yard")) {
-                len = new Length(this.value / 3, u);
-            } else if (u.equals("inch")) {
-                len = new Length(this.value * 12, u);
+    public Length as(UnitEnum unitEnum) {
+        return new Length(calculator(unitEnum), unitEnum);
+    }
+
+    private double calculator(UnitEnum unitEnum) {
+        double resultValue = this.value;
+        if (this.unitEnum == UnitEnum.FOOT) {
+            if (unitEnum == UnitEnum.YARD) {
+                resultValue = this.value / 3;
+            } else if (unitEnum == UnitEnum.INCH) {
+                resultValue = this.value * 12;
             }
         }
 
-        if (this.unit.equals("yard")) {
-            if (u.equals("inch")) {
-                len = new Length(this.value * 36, u);
-            } else if (u.equals("f")){
-                len = new Length(this.value * 3, u);
+        if (this.unitEnum == UnitEnum.YARD) {
+            if (unitEnum == UnitEnum.INCH) {
+                resultValue = this.value * 36;
+            } else if (unitEnum == UnitEnum.FOOT){
+                resultValue = this.value * 3;
             }
         }
 
-        if (this.unit.equals("inch")) {
-            if (u.equals("f")) {
-                len = new Length(this.value / 12, u);
-            } else if (u.equals("yard")) {
-                len = new Length(this.value / 36, u);
+        if (this.unitEnum == UnitEnum.INCH) {
+            if (unitEnum == UnitEnum.FOOT) {
+                resultValue = this.value / 12;
+            } else if (unitEnum == UnitEnum.YARD) {
+                resultValue = this.value / 36;
             }
         }
-
-        return len;
+        return resultValue;
     }
 
     public double getVal() {
         return this.value;
     }
 
-    public String getUinnt() {
-        return this.unit;
+    public UnitEnum getUnitEnum() {
+        return unitEnum;
     }
 }
