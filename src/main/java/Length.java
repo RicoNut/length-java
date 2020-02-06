@@ -8,7 +8,10 @@ public class Length {
     }
 
     public Length as(Unit target) {
-        double resultValue = this.value;
+        return new Length(calculator(target, this.value), target);
+    }
+
+    private double calculator(Unit target, double resultValue) {
         if (this.unit == Unit.FOOT) {
             if (target == Unit.YARD) {
                 resultValue = this.value / 3;
@@ -32,7 +35,7 @@ public class Length {
                 resultValue = this.value / 36;
             }
         }
-        return new Length(resultValue, target);
+        return resultValue;
     }
 
     public double getValue() {
